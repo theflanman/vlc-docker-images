@@ -18,7 +18,7 @@ RUN addgroup --quiet --gid ${VIDEOLAN_UID} videolan && \
     apt-get update && \
     apt-get install -y --no-install-suggests --no-install-recommends \
         make php-cgi php-curl php-gd php-intl php-mbstring php-json \
-        php-opcache php-pgsql php-readline php-xml git ca-certificates sassc \
+        php-opcache php-pgsql php-readline php-xml git ca-certificates sassc sass \
         gettext locales-all yui-compressor \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
