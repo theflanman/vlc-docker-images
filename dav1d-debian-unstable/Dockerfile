@@ -1,4 +1,4 @@
-FROM debian:sid-20231030-slim
+FROM debian:sid-20240110-slim
 
 MAINTAINER VideoLAN roots <roots@videolan.org>
 
@@ -32,9 +32,18 @@ RUN groupadd --gid ${VIDEOLAN_UID} videolan && \
         gcc-riscv64-linux-gnu g++-riscv64-linux-gnu libc6-dev-riscv64-cross && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
+RUN LOONG_TOOLCHAIN_NAME="CLFS-loongarch64-8.1-x86_64-cross-tools-gcc-glibc.tar.xz" && \
+    LOONG_TOOLCHAIN_SHA256="cd7c98499e1d7476df144cca22ade2140d3f311be0b4204591bdf8466971ba27" && \
+    curl --location --remote-name "https://github.com/loongson/build-tools/releases/download/2023.08.08/$LOONG_TOOLCHAIN_NAME" && \
+    echo "$LOONG_TOOLCHAIN_SHA256 $LOONG_TOOLCHAIN_NAME" | sha256sum -c && \
+    tar -xf "$LOONG_TOOLCHAIN_NAME" -C /opt && \
+    rm "$LOONG_TOOLCHAIN_NAME"
+
 USER videolan
 
 COPY scripts/wait_process.sh /opt/wine/
 RUN wine wineboot --init && \
     /opt/wine/wait_process.sh wineserver && \
     rm -rf /tmp/wine-*
+
+ENV PATH="/opt/cross-tools/bin:$PATH"
