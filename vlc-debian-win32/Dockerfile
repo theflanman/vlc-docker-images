@@ -14,7 +14,7 @@ ENV IMAGE_DATE=202211290000
 ENV TARGET_TUPLE=i686-w64-mingw32
 ENV TOOLCHAIN_PREFIX=/opt/gcc-${TARGET_TUPLE}
 ENV MINGW_PREFIX=$TOOLCHAIN_PREFIX/${TARGET_TUPLE}
-ENV PATH=$TOOLCHAIN_PREFIX/bin:/opt/protobuf/bin:$PATH
+ENV PATH=$TOOLCHAIN_PREFIX/bin:/opt/cmake/bin:/opt/protobuf/bin:$PATH
 
 # The wine SDK path differs from version to version, starting from the one in buster, it's
 # located in /usr/include/wine/wine/windows/ instead of
@@ -31,7 +31,7 @@ RUN set -x && \
     apt-get update -qq && apt-get install -qqy --no-install-suggests --no-install-recommends \
         git wget bzip2 file libwine-dev unzip libtool libtool-bin libltdl-dev pkg-config ant \
         build-essential automake texinfo ragel yasm p7zip-full autopoint \
-        gettext cmake dos2unix zip wine nsis curl gperf flex bison \
+        gettext dos2unix zip wine nsis curl gperf flex bison \
         libcurl4-gnutls-dev python3 python3-venv python3-setuptools python3-mako python3-requests \
         lftp gcc make procps ca-certificates \
         openjdk-11-jdk-headless locales nsis nasm jq gnupg \
@@ -151,6 +151,14 @@ RUN set -x && \
     WINE_MONO_SHA256=ac681f737f83742d786706529eb85f4bc8d6bdddd8dcdfa9e2e336b71973bc25 && \
     echo $WINE_MONO_SHA256 /usr/share/wine/mono/wine-mono-$WINE_MONO_VERSION.msi | sha256sum -c && \
     chmod +x /usr/share/wine/mono/wine-mono-$WINE_MONO_VERSION.msi && \
+    cd /build && \
+    CMAKE_VERSION=3.24.2 && \
+    CMAKE_SHA512=6f0e8e29bf0336f555ba72c4d83f35d820f8a5159cc999d48795dc57a6627b4ee3966dda84ca97d39906e35dd476ea00cf80023672cc0fad862e2996194c0674 && \
+    wget -q http://www.cmake.org/files/v3.24/cmake-$CMAKE_VERSION.tar.gz && \
+    echo $CMAKE_SHA512 cmake-$CMAKE_VERSION.tar.gz | sha512sum -c && \
+    tar xzf cmake-$CMAKE_VERSION.tar.gz && \
+    cd cmake-$CMAKE_VERSION && ./configure --prefix=/opt/cmake/ --parallel=$CORES --no-qt-gui -- \
+        -DCMAKE_USE_OPENSSL:BOOL=OFF -DBUILD_TESTING:BOOL=OFF && make -j$CORES && make install && \
     cd /build && \
     PROTOBUF_VERSION=3.4.1 && \
     PROTOBUF_SHA256=2bb34b4a8211a30d12ef29fd8660995023d119c99fbab2e5fe46f17528c9cc78 && \
