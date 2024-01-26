@@ -16,7 +16,7 @@ RUN apt-get update -qq && mkdir -p /usr/share/man/man1 && \
         automake yasm gettext autopoint vim ninja-build ant \
         winbind flex ragel bison zip dos2unix p7zip-full gperf nsis nasm cmake \
         python3 python3-venv python3-setuptools python3-mako locales meson help2man libltdl-dev \
-        ca-certificates curl default-jdk-headless gnupg procps && \
+        ca-certificates curl default-jdk-headless gnupg procps libcurl4-gnutls-dev && \
     dpkg --add-architecture i386 && \
     wget -nc -O /etc/apt/keyrings/winehq.asc https://dl.winehq.org/wine-builds/winehq.key && \
     echo "deb [ signed-by=/etc/apt/keyrings/winehq.asc ] https://dl.winehq.org/wine-builds/debian/ bookworm main" > /etc/apt/sources.list.d/winehq.list && \
@@ -37,7 +37,19 @@ ENV TOOLCHAIN_PREFIX=/opt/llvm-mingw
 
 ARG CORES=4
 
-RUN cd /build && \
+COPY patches /patches
+
+RUN cd /build/ && \
+    BREAKPAD_VERSION=0.1.4 && \
+    BREAKPAD_SHA256=020953390cce3a04ba859801bf863689a74e2aca0bd48ff256055f1c9af0e33a && \
+    wget -q https://download.videolan.org/pub/contrib/breakpad/breakpad-$BREAKPAD_VERSION.tar.gz && \
+    echo $BREAKPAD_SHA256 breakpad-$BREAKPAD_VERSION.tar.gz | sha256sum -c && \
+    tar xzf breakpad-$BREAKPAD_VERSION.tar.gz && \
+    cd breakpad-$BREAKPAD_VERSION && patch -p1 < /patches/0001-Fix-for-non-constant-SIGSTKSZ.patch && patch -p1 < /patches/0001-Fix-compilation-with-recent-gcc.patch && \
+    autoreconf -vif && mkdir build && cd build && \
+    ../configure --enable-tools --disable-processor --prefix=/opt/breakpad && \
+    make -j$CORES && make install && \
+    cd /build && \
     PROTOBUF_VERSION=3.4.1 && \
     PROTOBUF_SHA256=2bb34b4a8211a30d12ef29fd8660995023d119c99fbab2e5fe46f17528c9cc78 && \
     wget -q https://github.com/google/protobuf/releases/download/v$PROTOBUF_VERSION/protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
