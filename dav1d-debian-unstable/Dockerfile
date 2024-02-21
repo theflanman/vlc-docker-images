@@ -1,4 +1,4 @@
-FROM debian:sid-20240110-slim
+FROM debian:sid-20240211-slim
 
 MAINTAINER VideoLAN roots <roots@videolan.org>
 
@@ -18,16 +18,18 @@ RUN groupadd --gid ${VIDEOLAN_UID} videolan && \
     apt-get -y dist-upgrade && \
     apt-get install --no-install-suggests --no-install-recommends -y \
         lftp ca-certificates curl git build-essential \
-        nasm clang libclang-rt-dev mold meson ninja-build gcovr \
+        nasm clang-17 libclang-rt-17-dev mold meson ninja-build gcovr \
         wine wine64 procps doxygen graphviz libsdl2-dev ripgrep \
         zstd && \
+    ln -s clang-17 /usr/bin/clang && \
+    ln -s clang++-17 /usr/bin/clang++ && \
     dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install --no-install-suggests --no-install-recommends -y \
         gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 \
         gcc-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64-tools \
         gcc-multilib g++-multilib \
-        libc6-dev:i386 libgcc-12-dev:i386 wine32 qemu-user && \
+        libc6-dev:i386 libgcc-13-dev:i386 wine32 qemu-user && \
     apt-get install --no-install-suggests --no-install-recommends -y \
         gcc-riscv64-linux-gnu g++-riscv64-linux-gnu libc6-dev-riscv64-cross && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
