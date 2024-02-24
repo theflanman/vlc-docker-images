@@ -32,6 +32,8 @@ RUN groupadd --gid ${VIDEOLAN_UID} videolan && \
         libc6-dev:i386 libgcc-13-dev:i386 wine32 qemu-user && \
     apt-get install --no-install-suggests --no-install-recommends -y \
         gcc-riscv64-linux-gnu g++-riscv64-linux-gnu libc6-dev-riscv64-cross && \
+    apt-get install --no-install-suggests --no-install-recommends -y \
+        gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libc6-dev-arm64-cross && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 RUN LOONG_TOOLCHAIN_NAME="CLFS-loongarch64-8.1-x86_64-cross-tools-gcc-glibc.tar.xz" && \
