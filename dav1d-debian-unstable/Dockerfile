@@ -1,4 +1,4 @@
-FROM debian:sid-20240211-slim
+FROM debian:sid-20240330-slim
 
 MAINTAINER VideoLAN roots <roots@videolan.org>
 
@@ -18,11 +18,11 @@ RUN groupadd --gid ${VIDEOLAN_UID} videolan && \
     apt-get -y dist-upgrade && \
     apt-get install --no-install-suggests --no-install-recommends -y \
         lftp ca-certificates curl git build-essential \
-        nasm clang-17 libclang-rt-17-dev mold meson ninja-build gcovr \
+        nasm clang-18 libclang-rt-18-dev mold meson ninja-build gcovr \
         wine wine64 procps doxygen graphviz libsdl2-dev ripgrep \
         zstd && \
-    ln -s clang-17 /usr/bin/clang && \
-    ln -s clang++-17 /usr/bin/clang++ && \
+    ln -s clang-18 /usr/bin/clang && \
+    ln -s clang++-18 /usr/bin/clang++ && \
     dpkg --add-architecture i386 && \
     apt-get update && \
     apt-get install --no-install-suggests --no-install-recommends -y \
