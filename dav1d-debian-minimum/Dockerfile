@@ -1,4 +1,4 @@
-FROM debian:buster-20231009-slim
+FROM debian:buster-20240311-slim
 
 MAINTAINER VideoLAN roots <roots@videolan.org>
 
