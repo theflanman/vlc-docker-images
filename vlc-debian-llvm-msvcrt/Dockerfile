@@ -1,4 +1,4 @@
-FROM debian:bookworm-20231009-slim
+FROM debian:bookworm-20240311-slim
 
 MAINTAINER VideoLAN roots <roots@videolan.org>
 
