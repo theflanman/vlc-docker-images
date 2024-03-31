@@ -4,8 +4,6 @@ MAINTAINER VideoLAN roots <roots@videolan.org>
 
 ENV IMAGE_DATE=202306021100
 
-COPY crossfiles/ /opt/crossfiles/
-
 ENV ANDROID_NDK="/sdk/android-ndk" \
     ANDROID_SDK="/sdk/android-sdk-linux"
 
