@@ -30,7 +30,7 @@ RUN set -x && \
     libmpg123-dev libnfs-dev curl libltdl-dev freerdp2-dev libqt5svg5-dev \
     qtdeclarative5-dev qtquickcontrols2-5-dev qml-module-qtquick-controls2 \
     qml-module-qtquick-layouts qml-module-qtquick-templates2 qml-module-qttest qml-module-qtqml-models2 \
-    qml6-module-qt5compat-graphicaleffects qml6-module-qtcore qml6-module-qtqml qml6-module-qtqml-models \
+    qml6-module-qt5compat-graphicaleffects qml6-module-qtcore qml6-module-qtqml qml6-module-qtqml-workerscript qml6-module-qtqml-models \
     qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-dialogs qml6-module-qtquick-layouts \
     qml6-module-qtquick-templates qml6-module-qtquick-window qml6-module-qttest qt6-shadertools-dev \
     qt6-svg-dev qt6-wayland-dev qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-declarative-private-dev \
