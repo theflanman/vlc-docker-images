@@ -22,6 +22,13 @@ RUN set -x && \
     adduser --quiet --uid ${VIDEOLAN_UID} --ingroup videolan videolan && \
     echo "videolan:videolan" | chpasswd && \
     mkdir /build && cd /build && \
+    VLC_TOOLS_HASH=e64f5d7cc3b3f3c94e5c50a536d5b20eb1e7ae74 && \
+    git clone -b master https://code.videolan.org/videolan/vlc.git && cd vlc && git checkout ${VLC_TOOLS_HASH} && \
+    cd contrib && mkdir build-contribs && cd build-contribs && \
+    TARGET_TUPLE=wasm32-unknown-emscripten && \
+    ../bootstrap --host=$TARGET_TUPLE --prefix=/opt/tools/dummy --enable-ad-clauses && \
+    make -j$CORES list && \
+    make -j$CORES tools && \
     rm -rf /build/*
 
 USER videolan
