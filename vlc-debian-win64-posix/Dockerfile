@@ -12,7 +12,7 @@ ARG CORES=8
 ENV IMAGE_DATE=202401260000
 
 ENV TARGET_TUPLE=x86_64-w64-mingw32
-ENV PATH=/opt/cmake/bin:/opt/protobuf/bin:$PATH
+ENV PATH=/opt/cmake/bin:/opt/tools/bin:$PATH
 
 # The wine SDK path differs from version to version, starting from the one in buster, it's
 # located in /usr/include/wine/wine/windows/ instead of
@@ -69,16 +69,13 @@ RUN set -x && \
     cd cmake-$CMAKE_VERSION && ./configure --prefix=/opt/cmake/ --parallel=$CORES --no-qt-gui -- \
         -DCMAKE_USE_OPENSSL:BOOL=OFF -DBUILD_TESTING:BOOL=OFF && make -j$CORES && make install && \
     cd /build && \
-    PROTOBUF_VERSION=3.4.1 && \
-    PROTOBUF_SHA256=2bb34b4a8211a30d12ef29fd8660995023d119c99fbab2e5fe46f17528c9cc78 && \
-    wget -q https://github.com/google/protobuf/releases/download/v$PROTOBUF_VERSION/protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
-    echo $PROTOBUF_SHA256 protobuf-cpp-$PROTOBUF_VERSION.tar.gz | sha256sum -c && \
-    tar xzfo protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
-    cd protobuf-$PROTOBUF_VERSION && \
-# force include <algorithm> \
-    sed -i.orig 's,#ifdef _MSC_VER,#if 1,' "src/google/protobuf/repeated_field.h" && \
-    cmake  -S cmake -B cbuild -DBUILD_SHARED_LIBS=OFF -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF && \
-    cmake --build cbuild --parallel $CORES && cmake --install cbuild --prefix /opt/protobuf && \
+    VLC_TOOLS_HASH=e64f5d7cc3b3f3c94e5c50a536d5b20eb1e7ae74 && \
+    git clone -b master https://code.videolan.org/videolan/vlc.git && cd vlc && git checkout ${VLC_TOOLS_HASH} && \
+    cd contrib && mkdir build-contribs && cd build-contribs && \
+    TARGET_TUPLE=x86_64-w64-mingw32 && \
+    ../bootstrap --host=$TARGET_TUPLE --prefix=/opt/tools/dummy --enable-ad-clauses && \
+    make -j$CORES list && \
+    make -j$CORES tools && \
     cd / && rm -rf /build
 
 RUN git config --global user.name "VideoLAN Buildbot" && \
