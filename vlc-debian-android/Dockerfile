@@ -29,7 +29,8 @@ RUN groupadd --gid ${VIDEOLAN_CI_UID} videolan && \
         flex build-essential libtool libtool-bin patch pkg-config cmake meson \
         git yasm ragel g++ gettext ninja-build \
         wget expect unzip python3 python3-venv python3-setuptools python3-mako \
-        locales libltdl-dev curl nasm gperf && \
+        locales libltdl-dev curl nasm gperf \
+        protobuf-compiler && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
     echo "export ANDROID_NDK=${ANDROID_NDK}" >> /etc/profile.d/vlc_env.sh && \
@@ -59,16 +60,6 @@ RUN groupadd --gid ${VIDEOLAN_CI_UID} videolan && \
     cmdline-tools/bin/sdkmanager --sdk_root=/sdk/android-sdk-linux/ "build-tools;26.0.1" "platform-tools" "platforms;android-26" && \
     chown -R videolan /sdk && \
     mkdir /build && cd /build && \
-    PROTOBUF_VERSION=3.4.1 && \
-    PROTOBUF_SHA256=2bb34b4a8211a30d12ef29fd8660995023d119c99fbab2e5fe46f17528c9cc78 && \
-    wget -q https://github.com/google/protobuf/releases/download/v$PROTOBUF_VERSION/protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
-    echo $PROTOBUF_SHA256 protobuf-cpp-$PROTOBUF_VERSION.tar.gz | sha256sum -c && \
-    tar xzfo protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
-    cd protobuf-$PROTOBUF_VERSION && \
-# force include <algorithm> \
-    sed -i.orig 's,#ifdef _MSC_VER,#if 1,' "src/google/protobuf/repeated_field.h" && \
-    cmake  -S cmake -B build -DBUILD_SHARED_LIBS=OFF -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF && \
-    cmake --build build --parallel $CORES && cmake --install build --prefix /opt/tools && \
     rm -rf /build
 
 ENV LANG en_US.UTF-8
