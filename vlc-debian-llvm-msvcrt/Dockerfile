@@ -16,7 +16,8 @@ RUN apt-get update -qq && mkdir -p /usr/share/man/man1 && \
         automake yasm gettext autopoint vim ninja-build ant libgl-dev libegl-dev \
         winbind flex ragel bison zip dos2unix p7zip-full gperf nsis nasm cmake \
         python3 python3-venv python3-setuptools python3-mako locales meson help2man libltdl-dev \
-        ca-certificates curl default-jdk-headless gnupg procps libcurl4-gnutls-dev && \
+        ca-certificates curl default-jdk-headless gnupg procps libcurl4-gnutls-dev \
+        protobuf-compiler && \
     dpkg --add-architecture i386 && \
     wget -nc -O /etc/apt/keyrings/winehq.asc https://dl.winehq.org/wine-builds/winehq.key && \
     echo "deb [ signed-by=/etc/apt/keyrings/winehq.asc ] https://dl.winehq.org/wine-builds/debian/ bookworm main" > /etc/apt/sources.list.d/winehq.list && \
@@ -49,17 +50,6 @@ RUN cd /build/ && \
     autoreconf -vif && mkdir build && cd build && \
     ../configure --enable-tools --disable-processor --prefix=/opt/breakpad && \
     make -j$CORES && make install && \
-    cd /build && \
-    PROTOBUF_VERSION=3.4.1 && \
-    PROTOBUF_SHA256=2bb34b4a8211a30d12ef29fd8660995023d119c99fbab2e5fe46f17528c9cc78 && \
-    wget -q https://github.com/google/protobuf/releases/download/v$PROTOBUF_VERSION/protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
-    echo $PROTOBUF_SHA256 protobuf-cpp-$PROTOBUF_VERSION.tar.gz | sha256sum -c && \
-    tar xzfo protobuf-cpp-$PROTOBUF_VERSION.tar.gz && \
-    cd protobuf-$PROTOBUF_VERSION && \
-# force include <algorithm> \
-    sed -i.orig 's,#ifdef _MSC_VER,#if 1,' "src/google/protobuf/repeated_field.h" && \
-    cmake  -S cmake -B build -DBUILD_SHARED_LIBS=OFF -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_BUILD_EXAMPLES=OFF && \
-    cmake --build build --parallel $CORES && cmake --install build --prefix /opt/tools && \
     rm -rf /build/*
 
 ENV PATH=/opt/tools/bin:$PATH
