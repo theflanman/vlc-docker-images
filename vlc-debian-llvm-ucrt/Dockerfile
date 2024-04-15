@@ -91,6 +91,19 @@ RUN chmod +x /opt/wine/wait_process.sh && \
     echo $WINE_MONO_SHA256 /usr/share/wine/mono/wine-mono-$WINE_MONO_VERSION.msi | sha256sum -c && \
     chmod +x /usr/share/wine/mono/wine-mono-$WINE_MONO_VERSION.msi
 
+ENV PATH=$TOOLCHAIN_PREFIX/bin:$PATH
+
+# Build VLC tools
+RUN cd /build/ && \
+    VLC_TOOLS_HASH=e64f5d7cc3b3f3c94e5c50a536d5b20eb1e7ae74 && \
+    git clone -b master https://code.videolan.org/videolan/vlc.git && cd vlc && git checkout ${VLC_TOOLS_HASH} && \
+    cd contrib && mkdir build-contribs && cd build-contribs && \
+    TARGET_TUPLE=x86_64-w64-mingw32 && \
+    ../bootstrap --host=$TARGET_TUPLE --prefix=/opt/tools/dummy --enable-ad-clauses && \
+    make -j$CORES list && \
+    make -j$CORES tools && \
+    rm -rf /build/*
+
 # If someone wants to use VideoLAN docker images on a local machine and does
 # not want to be disturbed by the videolan user, we should not take an uid/gid
 # in the user range of main distributions, which means:
@@ -108,5 +121,3 @@ RUN wine wineboot --init && \
     /opt/wine/winetricks --unattended dotnet48 dotnet_verifier && \
     rm -rf ~/.cache/winetricks && \
     rm -rf /tmp/.wine-*
-
-ENV PATH=$TOOLCHAIN_PREFIX/bin:$PATH
