@@ -35,7 +35,7 @@ RUN groupadd --gid ${VIDEOLAN_CI_UID} videolan && \
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
     echo "export ANDROID_NDK=${ANDROID_NDK}" >> /etc/profile.d/vlc_env.sh && \
     echo "export ANDROID_SDK=${ANDROID_SDK}" >> /etc/profile.d/vlc_env.sh && \
-    mkdir sdk && cd sdk && \
+    mkdir /sdk && cd /sdk && \
     ANDROID_NDK_VERSION=26b && \
     ANDROID_NDK_SHA256=ad73c0370f0b0a87d1671ed2fd5a9ac9acfd1eb5c43a7fbfbd330f85d19dd632 && \
     wget -q https://dl.google.com/android/repository/android-ndk-r$ANDROID_NDK_VERSION-linux.zip && \
@@ -55,8 +55,7 @@ RUN groupadd --gid ${VIDEOLAN_CI_UID} videolan && \
     echo $SDK_TOOLS_SHA256 $SDK_TOOLS_FILENAME | sha256sum -c && \
     unzip $SDK_TOOLS_FILENAME && \
     rm -f $SDK_TOOLS_FILENAME && \
-    cd / && \
-    cd sdk/android-sdk-linux && \
+    cd /sdk/android-sdk-linux && \
     cmdline-tools/bin/sdkmanager --sdk_root=/sdk/android-sdk-linux/ "build-tools;26.0.1" "platform-tools" "platforms;android-26" && \
     chown -R videolan /sdk && \
     mkdir /build && cd /build && \
