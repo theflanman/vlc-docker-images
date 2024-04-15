@@ -120,6 +120,3 @@ RUN wine wineboot --init && \
     rm -rf /tmp/.wine-*
 
 ENV PATH=$TOOLCHAIN_PREFIX/bin:$PATH
-
-COPY crossfiles /opt/crossfiles
-
