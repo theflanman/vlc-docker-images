@@ -37,7 +37,7 @@ RUN set -x && \
       libva-dev libvdpau-dev libx11-dev libxcb-composite0-dev libxcb-keysyms1-dev \
       libxcb-randr0-dev libxcb-shm0-dev libxcb-xfixes0-dev libxcb-xv0-dev libxcb1-dev \
       libxext-dev libxi-dev libxinerama-dev libxml2-dev libxpm-dev libzvbi-dev \
-      locales lua5.2 make pkg-config p7zip-full wget qtbase5-dev qtbase5-private-dev ragel \
+      locales lua5.2 make pkg-config p7zip-full wget qtbase5-dev qtbase5-private-dev \
       vim xz-utils yasm zlib1g-dev libxkbcommon-x11-dev meson \
       curl build-essential python3-venv python3-pip python3-setuptools python3-mako python3-wheel \
       nasm clang libvulkan-dev qtdeclarative5-dev qtquickcontrols2-5-dev \

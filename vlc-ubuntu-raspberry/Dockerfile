@@ -27,7 +27,7 @@ RUN echo "APT::Install-Recommends \"false\";\nAPT::Install-Suggests \"false\";" 
     apt-get install -y curl gnupg1 ca-certificates \
         git wget bzip2 file unzip libtool-bin pkg-config cmake build-essential \
         automake yasm gettext autopoint git-svn ninja-build ant \
-        flex ragel bison zip dos2unix p7zip-full subversion gperf nasm \
+        flex bison zip dos2unix p7zip-full subversion gperf nasm \
         python python3 python3-venv python3-setuptools python3-mako locales meson help2man \
         vim nano openjdk-11-jdk qtchooser xcb-proto crossbuild-essential-armhf
 
