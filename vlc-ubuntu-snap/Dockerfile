@@ -313,5 +313,7 @@ ENV SNAP_NAME="snapcraft"
 ENV SNAP_ARCH="amd64"
 # same as passing --destructive-mode to snapcraft
 ENV SNAPCRAFT_BUILD_ENVIRONMENT="host"
-
+# this prevent snapcraft from running "apt-get update" as this requires root privilege.
+# all packages should be already installed in the docker
+ENV CRAFT_PARTS_PACKAGE_REFRESH=0
 USER videolan
