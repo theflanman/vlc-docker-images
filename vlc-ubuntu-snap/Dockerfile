@@ -121,8 +121,11 @@ RUN set -x && \
     echo "install vlc build packages" && \
     apt-get install --yes \
       ant \
+      autopoint \
       git \
       g++ \
+      gperf \
+      nasm \
       make \
       autoconf \
       libtool \
@@ -136,6 +139,76 @@ RUN set -x && \
       python3 \
       python3-pip \
       python3-venv \
+      python3-jinja2 \
+      lua5.2 \
+      pkg-config \
+      xz-utils \
+      zlib1g-dev \
+      bison \
+      flex \
+      protobuf-compiler \
+      glslang-dev \
+      libaom-dev \
+      libarchive-dev \
+      libaribb24-dev \
+      libasound2-dev \
+      libass-dev \
+      libavcodec-dev \
+      libavdevice-dev \
+      libavfilter-dev \
+      libavformat-dev \
+      libavutil-dev \
+      libbluray-dev \
+      libcaca-dev \
+      libcddb2-dev \
+      libchromaprint-dev \
+      libdav1d-dev \
+      libdca-dev \
+      libdvbpsi-dev \
+      libdvdnav-dev \
+      libdvdread-dev \
+      libebur128-dev \
+      libfaad-dev \
+      libffi-dev \
+      libflac-dev \
+      libfluidsynth-dev \
+      libgmp-dev \
+      libgsm1-dev \
+      libjack-dev \
+      libjpeg-turbo8-dev \
+      libkate-dev \
+      libmad0-dev \
+      libmatroska-dev \
+      libmodplug-dev \
+      libmpeg2-4-dev \
+      libmpg123-dev \
+      libmysofa-dev \
+      libnfs-dev \
+      libogg-dev \
+      liborc-0.4-dev \
+      libplacebo-dev \
+      libpostproc-dev \
+      libsamplerate0-dev \
+      libshout-dev \
+      libsidplay2-dev \
+      libsoxr-dev \
+      libspatialaudio-dev \
+      libspeex-dev \
+      libspeexdsp-dev \
+      libsrt-gnutls-dev \
+      libssh2-1-dev \
+      libswresample-dev \
+      libswscale-dev \
+      libtag1-dev \
+      libtheora-dev \
+      libtwolame-dev \
+      libupnp-dev \
+      libvncserver-dev \
+      libvorbis-dev \
+      libvpx-dev \
+      libx264-dev \
+      libx265-dev \
+      libxcb1-dev \
       libxcb-xfixes0-dev \
       libasound2-dev \
       libavahi-client-dev \
@@ -180,17 +253,10 @@ RUN set -x && \
       libxml2-dev \
       libxpm-dev \
       libzvbi-dev \
-      lua5.2 \
-      pkg-config \
-      xz-utils \
-      zlib1g-dev \
-      bison \
-      flex \
       libvulkan-dev \
       libgcrypt20-dev \
       libsystemd-dev \
       libprotobuf-dev \
-      protobuf-compiler \
       wayland-protocols \
       qt6-shader-baker \
       libqt6svg6-dev \
@@ -214,24 +280,91 @@ RUN set -x && \
     && \
     echo "install vlc stage packages" && \
     apt-get install --yes \
-      fonts-freefont-ttf \
+      i965-va-driver \
+      intel-media-va-driver \
       dbus-x11 \
+      fonts-freefont-ttf \
+      libaacs0 \
+      libaom3 \
+      libarchive13 \
+      libaribb24-0 \
+      libasound2 \
+      libass9 \
+      libatk1.0-0 \
+      libavcodec58 \
+      libavformat58 \
+      libavutil56 \
+      libbluray2 \
+      libcaca0 \
+      libcddb2 \
+      libchromaprint1 \
+      libdav1d5 \
+      libdb5.3 \
+      libdca0 \
+      libdvbpsi10 \
+      libdvdnav4 \
+      libdvdread8 \
+      libebur128-1 \
       libegl1-mesa \
+      libfluidsynth3 \
       libfreetype6 \
       libfribidi0 \
-      libdb5.3 \
       libgcc1 \
+      libgcrypt20 \
       libgl1-mesa-glx \
       libgles2-mesa \
       libglib2.0-0 \
+      libglu1-mesa \
+      libgtk-3-0 \
+      libidn12 \
+      libjack0 \
+      libkate1 \
+      liblua5.2-0 \
+      libmad0 \
+      libmatroska7 \
+      libmodplug1 \
+      libmp3lame0 \
+      libmpeg2-4 \
+      libmpg123-0 \
+      libmtp9 \
+      libmysofa1 \
+      libnfs13 \
+      libnotify4 \
+      libopenjp2-7 \
+      liborc-0.4-0 \
+      libplacebo192 \
+      libpostproc55 \
+      libprotobuf23 \
       libpulse0 \
       librsvg2-2 \
+      libsamplerate0 \
       libsecret-1-0 \
+      libshout3 \
+      libsndio7.0 \
+      libsoxr0 \
+      libspatialaudio0 \
+      libspeex1 \
+      libspeexdsp1 \
+      libsrt1.4-gnutls \
+      libssh2-1 \
+      libswresample3 \
+      libswscale5 \
+      libtag1v5-vanilla \
+      libtheora0 \
+      libtwolame0 \
+      libupnp13 \
       libva-drm2 \
+      libva-wayland2 \
       libva-x11-2 \
       libva2 \
       libvdpau1 \
+      libvncclient1 \
+      libvorbisfile3 \
+      libvpx7 \
+      libvulkan1 \
       libx11-6 \
+      libx264-163 \
+      libx265-199 \
       libxcb-composite0 \
       libxcb-damage0 \
       libxcb-keysyms1 \
@@ -239,38 +372,22 @@ RUN set -x && \
       libxcb-shm0 \
       libxcb-xv0 \
       libxcb1 \
+      libxcomposite1 \
+      libxcursor1 \
       libxext6 \
       libxi6 \
       libxinerama1 \
       libxkbcommon-x11-0 \
       libxpm4 \
-      vdpau-driver-all \
-      i965-va-driver \
-      intel-media-va-driver \
+      libxrandr2 \
+      libzvbi0 \
       mesa-utils \
+      mesa-va-drivers \
       mesa-vdpau-drivers \
       mesa-vulkan-drivers \
-      mesa-va-drivers \
-      zlib1g \
-      libjack0 \
-      libasound2 \
-      libgtk-3-0 \
-      liblua5.2-0 \
-      libmtp9 \
-      libzvbi0 \
-      libnotify4 \
-      libvulkan1 \
-      libaacs0 \
-      libvulkan-dev \
       openjdk-8-jdk \
-      libgcrypt20 \
-      libidn12 \
-      libxcomposite1 \
-      libxcursor1 \
-      libxrandr2 \
-      libatk1.0-0 \
-      libva-wayland2 \
-      libprotobuf23 \
+      vdpau-driver-all \
+      zlib1g \
       qt6-wayland \
       qt6-qpa-plugins \
       qml6-module-qt5compat-graphicaleffects \
@@ -292,7 +409,6 @@ RUN set -x && \
       libqt6quick6 \
       libqt6quickcontrols2-6 \
       libqt6quicklayouts6 \
-      libqt6quickshapes6 \
       libqt6quicktemplates2-6 \
       libqt6qml6 \
       libqt6opengl6 \
