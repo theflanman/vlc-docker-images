@@ -59,7 +59,7 @@ RUN groupadd --gid ${VIDEOLAN_CI_UID} videolan && \
     cmdline-tools/bin/sdkmanager --sdk_root=/sdk/android-sdk-linux/ "build-tools;26.0.1" "platform-tools" "platforms;android-26" && \
     chown -R videolan /sdk && \
     mkdir /build && cd /build && \
-    VLC_TOOLS_HASH=e64f5d7cc3b3f3c94e5c50a536d5b20eb1e7ae74 && \
+    VLC_TOOLS_HASH=7c260ce99e870757f78cd6a2fda9212944a000ea && \
     git clone -b master https://code.videolan.org/videolan/vlc.git && cd vlc && git checkout ${VLC_TOOLS_HASH} && \
     cd contrib && mkdir build-contribs && cd build-contribs && \
     TARGET_TUPLE=aarch64-linux-android && \
