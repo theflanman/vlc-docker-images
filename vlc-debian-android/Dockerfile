@@ -16,7 +16,7 @@ ARG VIDEOLAN_CI_UID=499
 
 ARG CORES=8
 
-ENV PATH=/sdk/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/:/opt/tools/bin:$PATH
+ENV PATH=/sdk/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/:/opt/tools/bin:/opt/tools/libexec:$PATH
 
 RUN groupadd --gid ${VIDEOLAN_CI_UID} videolan && \
     useradd --uid ${VIDEOLAN_CI_UID} --gid videolan --create-home --shell /bin/bash videolan && \

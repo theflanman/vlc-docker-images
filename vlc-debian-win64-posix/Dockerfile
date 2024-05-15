@@ -12,7 +12,7 @@ ARG CORES=8
 ENV IMAGE_DATE=202401260000
 
 ENV TARGET_TUPLE=x86_64-w64-mingw32
-ENV PATH=/opt/cmake/bin:/opt/tools/bin:$PATH
+ENV PATH=/opt/cmake/bin:/opt/tools/bin:/opt/tools/libexec:$PATH
 
 # The wine SDK path differs from version to version, starting from the one in buster, it's
 # located in /usr/include/wine/wine/windows/ instead of

@@ -6,7 +6,7 @@ ARG VIDEOLAN_UID=499
 ARG EMSDK_VERSION=3.1.55
 ARG CORES=8
 
-ENV PATH=/opt/tools/bin:$PATH
+ENV PATH=/opt/tools/bin:/opt/tools/libexec:$PATH
 
 RUN set -x && \
     apt-get update && \

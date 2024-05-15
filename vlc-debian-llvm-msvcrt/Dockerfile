@@ -52,7 +52,7 @@ RUN cd /build/ && \
     make -j$CORES && make install && \
     rm -rf /build/*
 
-ENV PATH=/opt/tools/bin:$PATH
+ENV PATH=/opt/tools/bin:/opt/tools/libexec:$PATH
 
 ARG TOOLCHAIN_ARCHS="i686 x86_64 armv7 aarch64"
 
