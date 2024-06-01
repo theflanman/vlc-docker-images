@@ -95,7 +95,7 @@ ENV PATH=$TOOLCHAIN_PREFIX/bin:$PATH
 
 # Build VLC tools
 RUN cd /build/ && \
-    VLC_TOOLS_HASH=7c260ce99e870757f78cd6a2fda9212944a000ea && \
+    VLC_TOOLS_HASH=9e089f4edad0ed726dd18e37ea209e360d0e44c9 && \
     git clone -b master https://code.videolan.org/videolan/vlc.git && cd vlc && git checkout ${VLC_TOOLS_HASH} && \
     cd contrib && mkdir build-contribs && cd build-contribs && \
     TARGET_TUPLE=x86_64-w64-mingw32 && \
